@@ -11,10 +11,11 @@ self.addEventListener("push", (e) => {
     }
   }
 
-  const title = data.title || "Yeni Makale Eklendi!";
+  const title = "const başlığı";
 
   const options = {
-    body: data.body || "Yeni Makaleye Göz Atın111!",
+    title: "başlık",
+    body: "body",
     icon: "/images/logo.png",
     badge: "/images/badge.png",
     vibrate: [100, 50, 100],
