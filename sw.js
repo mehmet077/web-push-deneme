@@ -1,4 +1,5 @@
 self.addEventListener("push", (e) => {
+  console.log(e.data);
   console.log("📨 PUSH GELDİ:", e.data?.text());
 
   let data = {};
