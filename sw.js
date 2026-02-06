@@ -1,48 +1,29 @@
-self.addEventListener("push", (e) => {
-  console.log(e.data);
-  console.log("📨 PUSH GELDİ:", e.data?.text());
-
+self.addEventListener("push", (event) => {
   let data = {};
 
-  if (e.data) {
-    try {
-      data = e.data.json();
-    } catch (err) {
-      data.body = e.data.text();
-    }
+  if (event.data) {
+    data = event.data.json();
   }
 
-  const title = "Bildirim Başlığı";
+  const title = data.title || "Varsayılan Başlık";
 
   const options = {
-    body: e.data?.text(),
-    icon: "/images/logo.png",
-    badge: "/images/badge.png",
-    vibrate: [100, 50, 100],
-    requireInteraction: true, // 🔥 Chrome için çok önemli
+    body: data.body || "",
+    icon: data.icon || "/images/logo.png",
+    badge: data.badge || "/images/badge.png",
+    vibrate: data.vibrate || [100, 50, 100],
+    requireInteraction: data.requireInteraction ?? true,
     data: {
       url: data.url || "/",
       dateOfArrival: Date.now()
     },
-    actions: [
-      {
-        action: "open",
-        title: "Aç"
-      },
-      {
-        action: "close",
-        title: "Kapat"
-      }
-    ]
+    actions: data.actions || []
   };
 
-  e.waitUntil(
+  event.waitUntil(
     self.registration.showNotification(title, options)
   );
 });
-
-
-// 🔔 Bildirime tıklanınca
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
