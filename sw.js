@@ -1,27 +1,39 @@
 self.addEventListener("push", (e) => {
-  console.log("e :>> ", e.data.text());
+  let data = {};
+
+  if (e.data) {
+    try {
+      data = e.data.json();
+    } catch {
+      data.body = e.data.text();
+    }
+  }
+
   const config = {
-    body: e.data.text() || "Yeni Makaleye Gözatın!!",
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: "3",
-    },
-    icon: "images/logo.png",
+    body: data.body || "Yeni Makaleye Göz Atın!",
+    icon: "/images/logo.png",
+    badge: "/images/badge.png",
     vibrate: [100, 50, 100],
+    data: {
+      url: data.url || "/",
+      dateOfArrival: Date.now()
+    },
     actions: [
       {
-        action: "explore",
-        title: "Action1",
-        // icon: "images/"
+        action: "open",
+        title: "Aç"
       },
       {
         action: "close",
-        title: "Bildirimi Kapat",
-        // icon:
-      },
-    ],
+        title: "Kapat"
+      }
+    ]
   };
+
   e.waitUntil(
-    self.registration.showNotification("Yeni Makale Eklendi!!", config)
+    self.registration.showNotification(
+      data.title || "Yeni Makale Eklendi!",
+      config
+    )
   );
 });
