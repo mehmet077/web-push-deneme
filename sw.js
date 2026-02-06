@@ -11,11 +11,10 @@ self.addEventListener("push", (e) => {
     }
   }
 
-  const title = "const başlığı";
+  const title = "Bildirim Başlığı";
 
   const options = {
-    title: "başlık",
-    body: "body",
+    body: e.data?.text(),
     icon: "/images/logo.png",
     badge: "/images/badge.png",
     vibrate: [100, 50, 100],
