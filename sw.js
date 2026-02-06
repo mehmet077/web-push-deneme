@@ -14,7 +14,7 @@ self.addEventListener("push", (e) => {
   const title = data.title || "Yeni Makale Eklendi!";
 
   const options = {
-    body: data.body || "Yeni Makaleye Göz Atın!",
+    body: data.body || "Yeni Makaleye Göz Atın111!",
     icon: "/images/logo.png",
     badge: "/images/badge.png",
     vibrate: [100, 50, 100],
